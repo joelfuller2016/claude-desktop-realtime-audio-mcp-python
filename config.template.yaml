@@ -1,0 +1,55 @@
+# Claude Desktop Audio MCP Configuration
+# Copy this file to config.yaml and customize for your setup
+
+# Logging configuration
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR
+  file: null   # Set to a file path to log to file, null for console only
+
+# Audio capture settings
+audio:
+  sample_rate: 16000      # Sample rate in Hz (16000 recommended for STT)
+  channels: 1             # Number of audio channels (1 for mono, 2 for stereo)
+  chunk_size: 1024        # Audio buffer chunk size (smaller = lower latency)
+  device_id: null         # Audio device ID (null for default device)
+  use_wasapi_exclusive: false  # Use WASAPI exclusive mode (may reduce latency)
+  low_latency: true       # Enable low-latency optimizations
+
+# Voice Activity Detection settings
+vad:
+  mode: "hybrid"          # VAD mode: "webrtc", "energy", or "hybrid"
+  webrtc_aggressiveness: 2  # WebRTC VAD aggressiveness (0-3, higher = more aggressive)
+  energy_threshold: 0.01  # Energy threshold for speech detection
+  min_speech_duration: 0.1    # Minimum speech duration in seconds
+  min_silence_duration: 0.3   # Minimum silence duration to stop recording
+
+# Speech-to-Text configuration
+stt:
+  default_engine: "whisper"  # Default STT engine: "whisper", "azure", "google"
+  
+  # OpenAI Whisper settings
+  whisper:
+    model_size: "base"     # Model size: "tiny", "base", "small", "medium", "large"
+    use_api: false         # Use OpenAI API instead of local model
+    language: null         # Language code (null for auto-detection)
+    fp16: true            # Use half-precision for faster inference
+    beam_size: 5          # Beam search size (higher = more accurate, slower)
+  
+  # Azure Speech Services (optional)
+  azure:
+    enabled: false
+    api_key: null          # Set via AZURE_SPEECH_KEY environment variable
+    region: "eastus"       # Azure region
+    language: "en-US"      # Language code
+  
+  # Google Speech-to-Text (optional)
+  google:
+    enabled: false
+    credentials_path: null # Path to Google credentials JSON file
+    language: "en-US"      # Language code
+
+# Performance monitoring
+monitoring:
+  enabled: true
+  log_performance_metrics: false  # Log detailed performance metrics
+  max_memory_usage_mb: 1024      # Maximum memory usage before warnings
